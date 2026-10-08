@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Byte – Digitaler Assistent</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+            <div>
+                <h1>Byte 🤖</h1>
+                <p>Dein digitaler Assistent</p>
+            </div>
+
+            <button id="clearButton" type="button">
+                Chat löschen
+            </button>
+        </div>
+
+        <div id="chat">
+            <div class="message bot">
+                Hallo! 👋 Ich bin Byte 🤖<br>
+                Wie kann ich dir helfen?
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Schreibe deine Frage..."
+                autocomplete="off"
+            >
+
+            <button id="sendButton" type="button">
+                Absenden
+            </button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
