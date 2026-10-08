@@ -3,11 +3,9 @@ const button = document.getElementById("sendButton");
 const clearButton = document.getElementById("clearButton");
 const chat = document.getElementById("chat");
 
-
 /* =========================================================
    🤖 BYTE – DIGITALER ASSISTENT
    ========================================================= */
-
 
 /* =========================================================
    💬 CHAT-FUNKTIONEN
@@ -15,26 +13,20 @@ const chat = document.getElementById("chat");
 
 function addMessage(text, type) {
     const message = document.createElement("div");
-
     message.classList.add("message", type);
     message.textContent = text;
-
     chat.appendChild(message);
     chat.scrollTop = chat.scrollHeight;
 }
 
-
 function clearChat() {
     chat.innerHTML = "";
-
     addMessage(
         "Chat wurde gelöscht. 🧹\nWie kann ich dir helfen?",
         "bot"
     );
-
     input.focus();
 }
-
 
 /* =========================================================
    🧹 FRAGE VORBEREITEN
@@ -48,27 +40,23 @@ function normalizeText(text) {
         .replace(/\s+/g, " ");
 }
 
-
 /* =========================================================
-   🎯 HILFSFUNKTIONEN FÜR DIE ERKENNUNG
+   🎯 HILFSFUNKTIONEN
    ========================================================= */
 
 function containsAny(text, words) {
     return words.some(word => text.includes(word));
 }
 
-
 function containsAll(text, words) {
     return words.every(word => text.includes(word));
 }
-
 
 /* =========================================================
    🆘 HILFE
    ========================================================= */
 
-const helpAnswer =
-`Ich kann dir unter anderem bei diesen Themen helfen:
+const helpAnswer = `Ich kann dir unter anderem bei diesen Themen helfen:
 
 💻 IT
 Passwort, Login, Internet, WLAN, PC, Bildschirm, Drucker, E-Mail, Dateien und Software.
@@ -79,11 +67,10 @@ Allgemeine Fragen zur AWO und zur AWO Akademie.
 📚 Ausbildung
 Fachinformatik, IT-Systemelektronik, Deutschkurse und Berufsorientierung.
 
-💬 Allgemeine Fragen
-Begrüßungen, einfache Fragen über Byte und weitere Themen.
+🤖 KI
+Wenn ich eine Frage mit meinen festen Regeln nicht kenne, kann ich meine KI fragen.
 
-Schreib einfach deine Frage. 🤖`;
-
+Schreib einfach deine Frage.`;
 
 /* =========================================================
    🧠 BYTE – FRAGEN UND ANTWORTEN
@@ -91,9 +78,9 @@ Schreib einfach deine Frage. 🤖`;
 
 const commands = [
 
-    /* -----------------------------------------------------
+    /* =====================================================
        🆘 HILFE
-       ----------------------------------------------------- */
+       ===================================================== */
 
     {
         priority: 100,
@@ -109,10 +96,9 @@ const commands = [
         answer: helpAnswer
     },
 
-
-    /* -----------------------------------------------------
+    /* =====================================================
        🤖 ÜBER BYTE
-       ----------------------------------------------------- */
+       ===================================================== */
 
     {
         priority: 95,
@@ -151,13 +137,12 @@ const commands = [
                 "bist du echte künstliche intelligenz"
             ]),
         answer:
-            "Nein 😄 Ich bin aktuell kein echtes KI-System. Ich arbeite mit programmierten Regeln und Antworten."
+            "Ja 😎 Ich bin jetzt mit einer echten KI verbunden."
     },
 
-
-    /* -----------------------------------------------------
+    /* =====================================================
        👋 SMALLTALK
-       ----------------------------------------------------- */
+       ===================================================== */
 
     {
         priority: 90,
@@ -199,11 +184,6 @@ const commands = [
             "Bis zum nächsten Mal! 👋"
     },
 
-
-    /* -----------------------------------------------------
-       😎 EASTER EGG
-       ----------------------------------------------------- */
-
     {
         priority: 87,
         match: text =>
@@ -215,7 +195,6 @@ const commands = [
         answer:
             "Natürlich. Ich heiße Byte. Was erwartest du? 😎🤖"
     },
-
 
     /* =====================================================
        🔐 PASSWORT / LOGIN
@@ -247,7 +226,6 @@ const commands = [
         answer:
             "Prüfe zuerst Benutzername und Passwort. Wenn dein Account gesperrt ist, wende dich an den IT-Support."
     },
-
 
     /* =====================================================
        🌐 INTERNET / WLAN / VPN
@@ -312,7 +290,6 @@ const commands = [
             "Prüfe zuerst deine Netzwerkverbindung. Wenn das Problem bleibt, wende dich an den IT-Support."
     },
 
-
     /* =====================================================
        💻 COMPUTER / PC
        ===================================================== */
@@ -367,7 +344,6 @@ const commands = [
             "Unter Windows kannst du über Start → Ein/Aus → Neu starten auswählen."
     },
 
-
     /* =====================================================
        🖥️ BILDSCHIRM
        ===================================================== */
@@ -394,7 +370,6 @@ const commands = [
         answer:
             "Prüfe zuerst Stromversorgung und Verbindung zum PC."
     },
-
 
     /* =====================================================
        🔊 TON / MIKROFON / KAMERA
@@ -431,13 +406,11 @@ const commands = [
         match: text =>
             containsAny(text, [
                 "kamera geht nicht",
-                "kamera funktioniert nicht",
                 "kamera funktioniert nicht"
             ]),
         answer:
             "Prüfe, ob die Kamera angeschlossen ist und die verwendete Anwendung Zugriff darauf hat."
     },
-
 
     /* =====================================================
        🖨️ DRUCKER
@@ -474,9 +447,8 @@ const commands = [
                 "papier steckt im drucker"
             ]),
         answer:
-            "Schalte den Drucker aus und entferne das Papier vorsichtig. Beachte dabei die Hinweise des Druckerherstellers."
+            "Schalte den Drucker aus und entferne das Papier vorsichtig."
     },
-
 
     /* =====================================================
        📧 E-MAIL / OUTLOOK
@@ -509,7 +481,6 @@ const commands = [
             "Prüfe zuerst deine Internetverbindung und ob Outlook korrekt verbunden ist."
     },
 
-
     /* =====================================================
        🖱️ MAUS / TASTATUR
        ===================================================== */
@@ -537,7 +508,6 @@ const commands = [
         answer:
             "Prüfe die Verbindung der Tastatur und teste bei USB-Geräten einen anderen Anschluss."
     },
-
 
     /* =====================================================
        📁 DATEIEN / ORDNER
@@ -579,7 +549,6 @@ const commands = [
             "Prüfe zuerst den Papierkorb. Wenn die Datei dort nicht vorhanden ist, kann eventuell ein Backup helfen."
     },
 
-
     /* =====================================================
        🧩 SOFTWARE / UPDATES
        ===================================================== */
@@ -619,7 +588,6 @@ const commands = [
             "Prüfe deine Internetverbindung und starte das Programm erneut. Bei Firmenrechnern kann der IT-Support helfen."
     },
 
-
     /* =====================================================
        🏢 AWO
        ===================================================== */
@@ -646,7 +614,6 @@ const commands = [
         answer:
             "Die AWO bietet soziale Unterstützung und verschiedene Angebote für Menschen in unterschiedlichen Lebenssituationen."
     },
-
 
     /* =====================================================
        🏫 AWO AKADEMIE
@@ -682,7 +649,7 @@ const commands = [
                 "wo befindet sich die awo akademie"
             ]),
         answer:
-            "Die AWO Akademie befindet sich in Hamburg. Eine zentrale Adresse ist Auf dem Königslande 45, 22041 Hamburg."
+            "Die AWO Akademie befindet sich in Hamburg."
     },
 
     {
@@ -695,7 +662,6 @@ const commands = [
         answer:
             "Bei der AWO Akademie gibt es unter anderem anerkannte Ausbildungen im IT-Bereich, darunter Fachinformatik und IT-Systemelektronik."
     },
-
 
     /* =====================================================
        📚 AUSBILDUNG
@@ -747,7 +713,6 @@ const commands = [
             "Zu den IT-Ausbildungen gehören unter anderem Fachinformatik und IT-Systemelektronik."
     },
 
-
     /* =====================================================
        📚 DEUTSCHKURSE / BERUFSORIENTIERUNG
        ===================================================== */
@@ -775,18 +740,6 @@ const commands = [
         answer:
             "Ja. Die AWO Akademie bietet Berufsorientierung und Qualifizierungsangebote an."
     },
-
-    {
-        priority: 38,
-        match: text =>
-            containsAny(text, [
-                "für wen ist die awo akademie",
-                "an wen richten sich die angebote"
-            ]),
-        answer:
-            "Die Angebote richten sich unter anderem an Jugendliche und Erwachsene, die Unterstützung bei Sprache, Ausbildung, Qualifizierung oder beruflicher Orientierung suchen."
-    },
-
 
     /* =====================================================
        💻 IT-SOZIALKAUFHAUS
@@ -825,18 +778,6 @@ const commands = [
             "Dort werden gebrauchte IT-Geräte aufgearbeitet und anschließend zu günstigen Preisen angeboten."
     },
 
-    {
-        priority: 34,
-        match: text =>
-            containsAny(text, [
-                "wo befindet sich das it sozialkaufhaus",
-                "wo ist das it sozialkaufhaus"
-            ]),
-        answer:
-            "Das IT-Sozialkaufhaus befindet sich in Hamburg-Wandsbek."
-    },
-
-
     /* =====================================================
        📞 KONTAKT
        ===================================================== */
@@ -845,72 +786,51 @@ const commands = [
         priority: 33,
         match: text =>
             containsAny(text, [
-                "wie kann ich die awo akademie kontaktieren",
                 "kontakt awo akademie",
                 "telefonnummer awo akademie"
             ]),
         answer:
-            "Du kannst die AWO Akademie telefonisch unter 040 558 211 710 oder über ihre offiziellen Informationsangebote kontaktieren."
-    },
-
-    {
-        priority: 32,
-        match: text =>
-            containsAny(text, [
-                "wie kann ich mich informieren",
-                "wo kann ich mich informieren"
-            ]),
-        answer:
-            "Am besten informierst du dich direkt bei der AWO Akademie über die aktuellen Angebote und Voraussetzungen."
+            "Du kannst die AWO Akademie telefonisch unter 040 558 211 710 kontaktieren."
     }
-
 ];
-
 
 /* =========================================================
    🧠 ANTWORT FINDEN
    ========================================================= */
 
 function byteAntwort(frage) {
-
     const text = normalizeText(frage);
 
     if (text === "") {
         return "Bitte stelle mir eine Frage. 🤖";
     }
 
-    /*
-       Die Regeln werden nach Priorität sortiert.
-       Dadurch kommen spezielle Antworten vor allgemeinen Antworten.
-    */
-
     const sortedCommands = [...commands].sort(
         (a, b) => b.priority - a.priority
     );
 
     for (const command of sortedCommands) {
-
         if (command.match(text)) {
             return command.answer;
         }
     }
 
-    /*
-       Wenn Byte die Frage nicht erkennt.
-    */
-
-    return `404 – Antwort nicht gefunden. 🤖
-
-Ich habe diese Frage noch nicht verstanden.
-Versuche es anders oder schreibe "Hilfe".`;
+    // Keine feste Antwort gefunden
+    return null;
 }
 
+/* =========================================================
+   🤖 CLOUDFLARE WORKERS AI
+   ========================================================= */
+
+const BYTE_AI_URL =
+    "https://byte-ai.said-nihau.workers.dev";
 
 /* =========================================================
    🚀 NACHRICHT SENDEN
    ========================================================= */
 
-function sendMessage() {
+async function sendMessage() {
 
     const frageOriginal = input.value.trim();
 
@@ -919,39 +839,129 @@ function sendMessage() {
             "Bitte stelle mir eine Frage. 🤖",
             "bot"
         );
-
         input.focus();
         return;
     }
 
     addMessage(frageOriginal, "user");
 
-    const antwort = byteAntwort(frageOriginal);
-
-    addMessage(antwort, "bot");
-
     input.value = "";
     input.focus();
-}
 
+    /*
+       Zuerst prüft Byte seine festen Regeln.
+    */
+
+    const lokaleAntwort = byteAntwort(frageOriginal);
+
+    if (lokaleAntwort !== null) {
+        addMessage(lokaleAntwort, "bot");
+        return;
+    }
+
+    /*
+       Keine Regel gefunden.
+       Jetzt fragen wir die echte KI.
+    */
+
+    const thinkingMessage = document.createElement("div");
+
+    thinkingMessage.classList.add(
+        "message",
+        "bot"
+    );
+
+    thinkingMessage.textContent =
+        "Byte denkt nach... 🤖";
+
+    chat.appendChild(thinkingMessage);
+
+    chat.scrollTop = chat.scrollHeight;
+
+    try {
+
+        const response = await fetch(
+            BYTE_AI_URL,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    frage: frageOriginal
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        thinkingMessage.remove();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error ||
+                "AI-Anfrage fehlgeschlagen"
+            );
+        }
+
+        if (data.antwort) {
+
+            addMessage(
+                data.antwort,
+                "bot"
+            );
+
+        } else {
+
+            addMessage(
+                "Entschuldigung, ich konnte gerade keine Antwort erzeugen. 🤖",
+                "bot"
+            );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Byte AI Fehler:",
+            error
+        );
+
+        thinkingMessage.remove();
+
+        addMessage(
+            "Die Verbindung zur Byte-KI funktioniert gerade nicht. 🤖",
+            "bot"
+        );
+    }
+}
 
 /* =========================================================
    🖱️ BUTTONS
    ========================================================= */
 
-button.addEventListener("click", sendMessage);
+button.addEventListener(
+    "click",
+    sendMessage
+);
 
-clearButton.addEventListener("click", clearChat);
-
+clearButton.addEventListener(
+    "click",
+    clearChat
+);
 
 /* =========================================================
    ⌨️ ENTER-TASTE
    ========================================================= */
 
-input.addEventListener("keydown", function (event) {
+input.addEventListener(
+    "keydown",
+    function (event) {
 
-    if (event.key === "Enter") {
-        sendMessage();
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+
     }
-
-});
+);
