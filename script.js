@@ -21,10 +21,13 @@ function addMessage(text, type) {
 
 function clearChat() {
     chat.innerHTML = "";
+    resetConversation();
+
     addMessage(
         "Chat wurde gelöscht. 🧹\nWie kann ich dir helfen?",
         "bot"
     );
+
     input.focus();
 }
 
@@ -827,6 +830,70 @@ const BYTE_AI_URL =
     "https://byte-ai.said-nihau.workers.dev";
 
 /* =========================================================
+   🧠 GESPRÄCHSKONTEXT
+   ========================================================= */
+
+const MAX_HISTORY_MESSAGES = 20;
+
+let conversationHistory = [];
+
+function addToConversation(role, content) {
+    if (!content || typeof content !== "string") {
+        return;
+    }
+
+    conversationHistory.push({
+        role: role,
+        content: content.trim()
+    });
+
+    if (conversationHistory.length > MAX_HISTORY_MESSAGES) {
+        conversationHistory =
+            conversationHistory.slice(-MAX_HISTORY_MESSAGES);
+    }
+}
+
+function resetConversation() {
+    conversationHistory = [];
+}
+
+/* =========================================================
+   🤖 KI FRAGEN
+   ========================================================= */
+
+async function askByteAI() {
+
+    const response = await fetch(
+        BYTE_AI_URL,
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                messages: conversationHistory
+            })
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            data.error ||
+            "AI-Anfrage fehlgeschlagen"
+        );
+    }
+
+    return (
+        data.antwort ||
+        "Entschuldigung, ich konnte gerade keine Antwort erzeugen."
+    );
+}
+
+/* =========================================================
    🚀 NACHRICHT SENDEN
    ========================================================= */
 
@@ -839,32 +906,62 @@ async function sendMessage() {
             "Bitte stelle mir eine Frage. 🤖",
             "bot"
         );
+
         input.focus();
         return;
     }
 
-    addMessage(frageOriginal, "user");
+    /* =====================================================
+       👤 USER-NACHRICHT
+       ===================================================== */
+
+    addMessage(
+        frageOriginal,
+        "user"
+    );
+
+    addToConversation(
+        "user",
+        frageOriginal
+    );
 
     input.value = "";
     input.focus();
 
-    /*
-       Zuerst prüft Byte seine festen Regeln.
-    */
+    /* =====================================================
+       🧠 FESTE BYTE-REGELN
+       ===================================================== */
 
-    const lokaleAntwort = byteAntwort(frageOriginal);
+    const lokaleAntwort =
+        byteAntwort(frageOriginal);
 
     if (lokaleAntwort !== null) {
-        addMessage(lokaleAntwort, "bot");
+
+        addMessage(
+            lokaleAntwort,
+            "bot"
+        );
+
+        /*
+           Auch lokale Antworten werden gespeichert.
+           Dadurch kann die KI später den bisherigen
+           Gesprächsverlauf verstehen.
+        */
+
+        addToConversation(
+            "assistant",
+            lokaleAntwort
+        );
+
         return;
     }
 
-    /*
-       Keine Regel gefunden.
-       Jetzt fragen wir die echte KI.
-    */
+    /* =====================================================
+       🤖 ECHTE KI
+       ===================================================== */
 
-    const thinkingMessage = document.createElement("div");
+    const thinkingMessage =
+        document.createElement("div");
 
     thinkingMessage.classList.add(
         "message",
@@ -874,52 +971,28 @@ async function sendMessage() {
     thinkingMessage.textContent =
         "Byte denkt nach... 🤖";
 
-    chat.appendChild(thinkingMessage);
+    chat.appendChild(
+        thinkingMessage
+    );
 
-    chat.scrollTop = chat.scrollHeight;
+    chat.scrollTop =
+        chat.scrollHeight;
 
     try {
 
-        const response = await fetch(
-            BYTE_AI_URL,
-            {
-                method: "POST",
+        const antwort =
+            await askByteAI();
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+        thinkingMessage.textContent =
+            antwort;
 
-                body: JSON.stringify({
-                    frage: frageOriginal
-                })
-            }
+        addToConversation(
+            "assistant",
+            antwort
         );
 
-        const data = await response.json();
-
-        thinkingMessage.remove();
-
-        if (!response.ok) {
-            throw new Error(
-                data.error ||
-                "AI-Anfrage fehlgeschlagen"
-            );
-        }
-
-        if (data.antwort) {
-
-            addMessage(
-                data.antwort,
-                "bot"
-            );
-
-        } else {
-
-            addMessage(
-                "Entschuldigung, ich konnte gerade keine Antwort erzeugen. 🤖",
-                "bot"
-            );
-        }
+        chat.scrollTop =
+            chat.scrollHeight;
 
     } catch (error) {
 
@@ -928,12 +1001,8 @@ async function sendMessage() {
             error
         );
 
-        thinkingMessage.remove();
-
-        addMessage(
-            "Die Verbindung zur Byte-KI funktioniert gerade nicht. 🤖",
-            "bot"
-        );
+        thinkingMessage.textContent =
+            "Die Verbindung zur Byte-KI funktioniert gerade nicht. 🤖";
     }
 }
 
