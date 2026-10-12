@@ -4,13 +4,16 @@
 
 **Byte** ist ein universeller digitaler Assistent, der Nutzer bei verschiedenen Fragen und Aufgaben unterstützt.
 
-Das Projekt wurde im Rahmen meines IT-Praktikums entwickelt. Ziel ist es, einen einfachen und benutzerfreundlichen digitalen Assistenten zu entwickeln, der flexibel eingesetzt und später um weitere Funktionen erweitert werden kann.
+Das Projekt wurde im Rahmen meines IT-Praktikums entwickelt. Ziel war es, einen einfachen, benutzerfreundlichen und erweiterbaren digitalen Assistenten zu entwickeln.
+
+Byte kombiniert fest programmierte Funktionen mit einer KI-Anbindung. Dadurch kann Byte sowohl auf bestimmte Fragen direkt reagieren als auch allgemeine Fragen mithilfe der KI beantworten.
 
 ## 🎯 Ziele
 
 - Unterstützung bei verschiedenen Fragen und Aufgaben
 - Einfache und übersichtliche Bedienung
 - Benutzerfreundliche Oberfläche
+- KI-gestützte Antworten
 - Flexible Erweiterbarkeit
 - Praktische Anwendung moderner Webtechnologien
 
@@ -22,17 +25,29 @@ https://saidonet.github.io/Byte-Assistent/
 
 ## 🛠️ Verwendete Technologien
 
-- HTML
-- CSS
-- JavaScript
-- GitHub
-- GitHub Pages
+- **HTML** – für die Struktur der Website
+- **CSS** – für das Design und die Gestaltung
+- **JavaScript** – für die Funktionen und Interaktionen
+- **KI** – für die Verarbeitung und Beantwortung von Fragen
+- **Cloudflare Worker** – für die Verbindung zwischen der Website und der KI
+- **GitHub** – für die Speicherung und Verwaltung des Quellcodes
+- **GitHub Pages** – für die Veröffentlichung der Website
+
+## 🤖 Funktionen
+
+Byte kann unter anderem:
+
+- allgemeine Fragen beantworten
+- auf bestimmte programmierte Fragen reagieren
+- Gespräche und vorherige Nachrichten berücksichtigen
+- verschiedene Sprachen erkennen und verwenden
+- als universeller digitaler Assistent eingesetzt werden
 
 ## 🚀 Projektstatus
 
-Das Projekt befindet sich in der Entwicklung.
+Die grundlegende Version von Byte ist funktionsfähig und online verfügbar.
 
-Die grundlegende Version von Byte ist bereits funktionsfähig. Weitere Funktionen und Verbesserungen werden im Laufe der Entwicklung hinzugefügt.
+Das Projekt kann zukünftig um weitere Funktionen, Antworten und Möglichkeiten erweitert werden.
 
 ## 👨‍💻 Projekt
 
